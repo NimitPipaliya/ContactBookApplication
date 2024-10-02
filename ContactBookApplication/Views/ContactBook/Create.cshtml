@@ -1,0 +1,47 @@
+﻿@using ContactBookApplication.ViewModels
+@model ContactViewModel
+<h1>Create a New Contact</h1>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EmailId" class="control-label"></label>
+        <input asp-for="EmailId" class="form-control" />
+        <span asp-validation-for="EmailId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address" class="control-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="File" class="control-label"> </label>
+        <input asp-for="File" type="file" class="form-control" />
+        <span asp-validation-for="File" class="text-danger"></span>
+    </div>
+
+    <p/>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary" />
+        <a class="btn btn-secondary" asp-action="Index">Back To List</a>
+    </div>
+
+</form>

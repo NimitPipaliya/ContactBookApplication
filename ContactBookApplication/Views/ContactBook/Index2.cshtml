@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ContactBook>
+
+<a class="btn btn-primary" asp-action="Create">Add new contact</a>
+<form method="get">
+    <div>
+        <button class="btn btn-secondary" type="submit" value="">#</button>
+        @for (var character = 'A'; character <= 'Z'; character++)
+        {
+            <button class="btn btn-outline-secondary" type="submit" name="character" value="@character">@character</button>
+        }
+    </div>
+</form>
+<table class="table table-bordered table-striped text-center">
+    <thead>
+        <tr>
+            <th>Sr. No.</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int id = 0;
+        }
+        @foreach (var contact in Model)
+        {
+            <tr>
+                <td>
+                    @{
+                        id++;
+                    }@id
+                </td>
+                <td>@contact.FirstName @contact.LastName</td>
+                <td>
+                    <img src="@Url.Content("~/Uploads/"+@contact.FileName)" alt="Category image" width="50" height="50" />
+
+                </td>
+                <td>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@contact.ContactId">View</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@contact.ContactId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<div>
+    <!-- Page size dropdown -->
+    <label for="pageSize">Page Size:</label>
+    <select id="pageSize" onchange="changePageSize(this)">
+        <option value="5">5</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <!-- Add more options as needed -->
+    </select>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.Page ? "active" : "")">
+                <a class="page-link" href="/ContactBook/Index?page=@i&pageSize=@ViewBag.PageSize">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var currentPageSize = @(ViewBag.PageSize); // Get current page size from ViewBag
+        var pageSizeDropdown = document.getElementById("pageSize");
+        // Set selected option based on current page size
+        for (var i = 0; i < pageSizeDropdown.options.length; i++) {
+            if (pageSizeDropdown.options[i].value === currentPageSize.toString()) {
+                pageSizeDropdown.selectedIndex = i;
+                break;
+            }
+        }
+    });
+    function changePageSize(select) {
+        var pageSize = select.value;
+        var currentPage = @(ViewBag.CurrentPage);
+        window.location.href = "/ContactBook/Index?page=" + currentPage + "&pageSize=" + pageSize;
+    }
+</script>
